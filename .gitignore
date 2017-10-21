@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Ignore config file
+config.py
+
+# Ignore generated class
+main.css

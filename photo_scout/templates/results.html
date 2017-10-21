@@ -1,0 +1,52 @@
+<!doctype html>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+<title>Photo Scout</title>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script
+src="http://code.jquery.com/jquery-2.2.4.min.js"
+integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+crossorigin="anonymous"></script>
+
+<body id="results-page">
+        <header style="background-image:url(https://farm1.staticflickr.com/{{ images[0].server }}/{{ images[0].id }}_{{ images[0].secret }}.jpg)">
+        <nav>{{ keywords }}</nav>
+    </header>
+
+    <div class="container">
+        <aside>
+            <div class="line">
+                <span class="label">Top Lens</span>
+                <span class="info">105mm Nikkor</span>
+            </div>
+            <div class="line">
+                <span class="label">Top Boddy</span>
+                <span class="info">Nikon FM2</span>
+            </div>
+        </aside>
+        <section>
+            <div class="grid">
+            {% for image in images %}
+
+                <div class="grid-item photo-tile">
+                    <img src="https://farm1.staticflickr.com/{{ image.server }}/{{ image.id }}_{{ image.secret }}.jpg">
+                    <p>{{ image.title }}</p>
+                </div>
+
+            {% endfor %}
+            </div>
+        </section>
+    </div>
+
+    <script>
+        $( window ).load(function() {
+            var elem = document.querySelector('.grid');
+            var msnry = new Masonry( elem, {
+            // options
+            itemSelector: '.grid-item',
+            columnWidth: $(".grid-item").width()
+            });
+        });
+
+    </script>
+
+</body>
