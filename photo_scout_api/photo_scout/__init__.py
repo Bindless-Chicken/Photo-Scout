@@ -4,7 +4,7 @@ import flickrapi
 
 app = Flask(__name__)
 
-FLICKR = flickrapi.FlickrAPI(config.API_KEY, config.API_SECRET, format='parsed-json')
+FLICKR = flickrapi.FlickrAPI(config.API_KEY, config.API_SECRET, format='json')
 
 def find(lst, key, value):
     for i, dic in enumerate(lst):
@@ -33,4 +33,4 @@ def results():
     #     except flickrapi.FlickrError:
     #         print("No exif shared?")
 
-    return render_template('results.html', keywords=keywords, images=images["photos"]["photo"])
+    return images

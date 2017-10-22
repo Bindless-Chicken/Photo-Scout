@@ -105,3 +105,6 @@ config.py
 
 # Ignore generated class
 main.css
+
+# Ignore node modules
+node_modules/*

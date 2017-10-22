@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Photo Scout</title>
+    <link rel="stylesheet" type="text/css" href="assets/main.css">
+  </head>
+
+  <body id="result-page">
+
+    <navigation id="navigation-panel">
+        <div id="title">
+            <h1>Photo Scout</h1>
+        </div>
+        <ul id="categories">
+            <li>Photo</li>
+            <li>Map</li>
+            <li>Gear</li>
+            <li>Weather</li>
+        </ul>
+    </navigation>
+
+    <div id="content">
+        <div id="image-view" class="grid">
+            <div class="grid-item" v-for="image in images">
+                <div class="info">
+                    <span class="indicator"></span>
+                    <img v-bind:src="'https://farm' + image.farm + '.staticflickr.com/' + image.server + '/' + image.id + '_' + image.secret + '.jpg'">
+
+                    <p>{{image.title}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script
+    src="http://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="res/js/sampledata.js"></script>
+    <script src="res/js/app.js"></script>
+  </body>
+</html>
