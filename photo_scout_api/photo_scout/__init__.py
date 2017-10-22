@@ -1,10 +1,58 @@
 from flask import Flask, render_template, request
 import config
 import flickrapi
+from flask_cors import CORS
+import json
+import datetime
 
 app = Flask(__name__)
+CORS(app)
 
-FLICKR = flickrapi.FlickrAPI(config.API_KEY, config.API_SECRET, format='json')
+FLICKR = flickrapi.FlickrAPI(config.API_KEY, config.API_SECRET, format='parsed-json')
+
+class Image():
+    ''' A unified class across all photo services'''
+    def __init__(self):
+        self.Title = ""
+        self.Url = ""
+        self.Id = 0
+        self.Secret = 0
+        self.Lat = 0.0
+        self.Lon = 0.0
+        self.Lens = ""
+        self.Taken = 0
+
+    def ImportFlickr(self, image):
+        self.Title = image["title"];
+        self.Id = image["id"]
+        self.Secret = image["secret"]
+        self.Url = "https://farm" + str(image["farm"]) + ".staticflickr.com/" + str(image["server"]) + "/" + str(image["id"]) + "_" + str(image["secret"]) + ".jpg"
+        (self.Lat, self.Lon) = self.GetLocationFlickr()
+        self.Lens = self.GetLensFlickr()
+        self.Taken = self.GetInfoFlickr()
+
+    def GetLocationFlickr(self):
+        try:
+            image_location = FLICKR.photos.geo.getLocation(photo_id=self.Id, secret=self.Secret)
+            return [image_location["photo"]["location"]["latitude"], image_location["photo"]["location"]["longitude"]]
+        except flickrapi.FlickrError:
+            return [0.0, 0.0]
+
+    def GetLensFlickr(self):
+        try:
+            image_exif = FLICKR.photos.getExif(photo_id=self.Id, secret=self.Secret)
+            lens_info = find(image_exif["photo"]["exif"], "label", "Lens Model")
+            return "Unknown" if lens_info == -1 else image_exif["photo"]["exif"][lens_info]["raw"]["_content"]
+        except flickrapi.FlickrError:
+            return "Unknown"
+
+    def GetInfoFlickr(self):
+        try:
+            image_info = FLICKR.photos.getInfo(photo_id=self.Id, secret=self.Secret)
+            return image_info["photo"]["dates"]["taken"]
+        except flickrapi.FlickrError:
+            return "Unknown"
+
 
 def find(lst, key, value):
     for i, dic in enumerate(lst):
@@ -19,18 +67,17 @@ def main():
 @app.route("/results")
 def results():
     keywords = request.args.get('keywords')
-    images = FLICKR.photos.search(text=keywords, per_page='20', sort="interestingness-desc")
 
-    # for image in  images["photos"]["photo"]:
+    try:
+        images = FLICKR.photos.search(text=keywords, per_page='20', sort="interestingness-desc")
+    except flickrapi.FlickrError:
+        print("Error while getting the images")
 
-    #     try:
-    #         image_exif = FLICKR.photos.getExif(photo_id=image["id"], secret=image["secret"])
-    #         lens_info = find(image_exif["photo"]["exif"], "label", "Lens Model")
-    #         if lens_info != -1:
-    #             print(image_exif["photo"]["exif"][lens_info]["raw"]["_content"])
-    #         else:
-    #             print("Lens not shared")
-    #     except flickrapi.FlickrError:
-    #         print("No exif shared?")
+    imageList = []
 
-    return images
+    for image in images["photos"]["photo"]:
+        tempImage = Image()
+        tempImage.ImportFlickr(image)
+        imageList.append(tempImage)
+
+    return "[%s]" % ",\n ".join(json.dumps(e.__dict__) for e in imageList)

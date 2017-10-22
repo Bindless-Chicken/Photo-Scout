@@ -6,8 +6,23 @@
         width: 15%;
         height: 100vh;
         border-right: 1px solid black;
+        position: relative;
+        display: block;
+
+        .floating {
+            position: fixed;
+            display: block;
+            width: inherit;
+        }
+
+        #title {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
 
         #title h1 {
+            width: 100%;
             font-weight: 300;
             text-align: center;
             padding: 2em 0;
@@ -108,12 +123,18 @@
             }
         }
 
-        #map-view{
+        #map-view {
             height: 100vh;
 
             #map {
                 height: 100%;
                 width: 100%;
+            }
+        }
+
+        #time-view {
+            section {
+                height: 20px;
             }
         }
     }
