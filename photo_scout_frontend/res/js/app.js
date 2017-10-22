@@ -29,3 +29,26 @@ $(".grid-item").click(function(){
         info.addClass("selected");
     }
 });
+
+// UI
+$("#enable-map").click(function(){
+    $("#content .view").removeClass("active");
+    $("#content #map-view").addClass("active");
+    var map = L.map('map', {
+        center: [51.505, -0.09],
+        zoom: 13
+    });
+
+    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+
+    // start the map in South-East England
+    map.addLayer(osm);
+});
+
+$("#enable-image").click(function(){
+    $("#content .view").removeClass("active");
+    $("#content #image-view").addClass("active");
+});
+
