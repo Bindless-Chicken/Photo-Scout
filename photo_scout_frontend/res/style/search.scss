@@ -1,0 +1,64 @@
+
+#search-page {
+    background: url('media/bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    #title-container {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.6) 40%,rgba(0,0,0,0) 100%);
+        text-align: center;
+
+        h1, h2 {
+            margin: 0em;
+        }
+
+        h1 {
+            font-weight: 300;
+            font-size: 7em;
+        }
+
+        h2 {
+            font-weight: 100;
+            font-size: 3.5em;
+        }
+
+        form {
+            margin-top: 1em;
+            width: 100%;
+            display: flex;
+            // background-color: white;
+            // border-radius: 5px;
+            // box-shadow: inset 0 0 5px #000000;
+
+            .text {
+                width: 85%;
+                display: inline-block;
+                border: none;
+                padding: 7px 7px 7px 27px;
+                background-color: #fff;
+                background-repeat: no-repeat;
+                background-position: 7px 50%;
+                background-image: url(https://cdn.dribbble.com/assets/icon-search-7a07ad9f258fc1d8c28a29faa5627b41c2cc353d138b6bc3e987e0719584ce69.png);
+                border-radius: 4px 0 0 4px;
+                font-family: 'Raleway', sans-serif;
+            }
+
+            .button{
+                width: 15%;
+                border-radius: 0 4px 4px 0;
+                background-color: #eee;
+                border: none;
+
+                &:hover {
+                    background-color: #ccc;
+                }
+            }
+        }
+    }
+}
