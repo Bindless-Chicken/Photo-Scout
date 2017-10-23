@@ -27,9 +27,12 @@ class Image():
         self.Id = image["id"]
         self.Secret = image["secret"]
         self.Url = "https://farm" + str(image["farm"]) + ".staticflickr.com/" + str(image["server"]) + "/" + str(image["id"]) + "_" + str(image["secret"]) + ".jpg"
-        (self.Lat, self.Lon) = self.GetLocationFlickr()
-        self.Lens = self.GetLensFlickr()
-        self.Taken = self.GetInfoFlickr()
+        self.Lat = image["latitude"]
+        self.Lon = image["longitude"]
+        # (self.Lat, self.Lon) = self.GetLocationFlickr()
+        # self.Lens = self.GetLensFlickr()
+        # self.Taken = self.GetInfoFlickr()
+        self.Taken = image["datetaken"]
 
     def GetLocationFlickr(self):
         try:
@@ -69,7 +72,7 @@ def results():
     keywords = request.args.get('keywords')
 
     try:
-        images = FLICKR.photos.search(text=keywords, per_page='20', sort="interestingness-desc")
+        images = FLICKR.photos.search(text=keywords, per_page='20', sort="relevance", content_type=1, extras="geo,date_taken")
     except flickrapi.FlickrError:
         print("Error while getting the images")
 
