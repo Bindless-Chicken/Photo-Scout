@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
     integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
     crossorigin=""/>
+    <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css ">
   </head>
 
   <body id="result-page">
@@ -31,10 +32,15 @@
         <div id="image-view" class="grid view active">
             <div class="grid-item" v-for="image in images">
                 <div class="info" v-bind:lat=image.Lat v-bind:lon=image.Lon>
-                    <span class="indicator"></span>
+                    <span class="indicator">
+                        <i v-if="image.Lat != 0" class="fa fa-map" aria-hidden="true"></i>
+                    </span>
                     <img v-bind:src=image.Url>
 
-                    <p>{{image.Title}} - {{image.Lat}};{{image.Lon}} - {{image.Lens}}</p>
+                    <div class="description">
+                        <span class="title">{{image.Title}}</span>
+                        <span class="owner">{{image.Owner}} - all rights reserved</span>
+                    </div>
                 </div>
             </div>
         </div>

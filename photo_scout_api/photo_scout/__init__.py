@@ -21,6 +21,7 @@ class Image():
         self.Lon = 0.0
         self.Lens = ""
         self.Taken = 0
+        self.Owner = ""
 
     def ImportFlickr(self, image):
         self.Title = image["title"];
@@ -29,6 +30,7 @@ class Image():
         self.Url = "https://farm" + str(image["farm"]) + ".staticflickr.com/" + str(image["server"]) + "/" + str(image["id"]) + "_" + str(image["secret"]) + ".jpg"
         self.Lat = image["latitude"]
         self.Lon = image["longitude"]
+        self.Owner = image["ownername"]
         # (self.Lat, self.Lon) = self.GetLocationFlickr()
         # self.Lens = self.GetLensFlickr()
         # self.Taken = self.GetInfoFlickr()
@@ -72,7 +74,7 @@ def results():
     keywords = request.args.get('keywords')
 
     try:
-        images = FLICKR.photos.search(text=keywords, per_page='20', sort="relevance", content_type=1, extras="geo,date_taken")
+        images = FLICKR.photos.search(text=keywords, per_page='20', sort="relevance", content_type=1, extras="geo,date_taken,owner_name")
     except flickrapi.FlickrError:
         print("Error while getting the images")
 
