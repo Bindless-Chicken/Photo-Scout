@@ -5,8 +5,11 @@
                 <h1><a href="index.html">Photo Scout</a></h1>
 
                 <searchbar></searchbar>
+
+                <keywords></keywords>
             </div>
             <categories></categories>
+            <guidedisplay></guidedisplay>
         </div>
     </nav>
 </template>
@@ -14,12 +17,17 @@
 <script>
 import searchbar from './SearchBar.vue'
 import categories from './Categories.vue'
+import keywords from './Keywords.vue'
+import guidedisplay from './GuideDisplay.vue'
+
 
 export default {
   name: 'navbar',
   components:{
     searchbar,
-    categories
+    categories,
+    keywords,
+    guidedisplay
   },
 }
 </script>
