@@ -74,7 +74,7 @@ def results():
     keywords = request.args.get('keywords')
 
     try:
-        images = FLICKR.photos.search(text=keywords, per_page='20', sort="relevance", content_type=1, extras="geo,date_taken,owner_name")
+        images = FLICKR.photos.search(text=keywords, per_page='60', sort="relevance", content_type=1, extras="geo,date_taken,owner_name")
     except flickrapi.FlickrError:
         print("Error while getting the images")
 
